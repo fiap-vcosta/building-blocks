@@ -1,0 +1,10 @@
+---
+description: Escopo da biblioteca compartilhada
+alwaysApply: true
+---
+
+# Restrições do projeto (`building-blocks`)
+
+- Escopo: biblioteca compartilhada pelos serviços — contratos de evento, worker Pub/Sub, propagação de trace, Problem Details, validação JWT/JWKS, `X-Service-Key` e logging JSON. Esses blocos chegam depois; este repositório ainda não contém a biblioteca.
+- Não criar API web aqui.
+- README autocontido: sem referências a pastas fora do Git nem a numeração de documentos pessoais.
