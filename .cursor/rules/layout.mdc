@@ -1,0 +1,12 @@
+---
+description: Layout da class library building-blocks
+alwaysApply: true
+---
+
+# Layout (`building-blocks`)
+
+- Class library **.NET 8**, sem web host.
+- Testes espelham `src/`.
+- Id do pacote: `building-blocks`.
+- Quando o código existir, dependências com **versão exata** (sem `^` / `~`).
+- Sem comentários narrativos em C#.
