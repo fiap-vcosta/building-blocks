@@ -19,4 +19,9 @@
     <FrameworkReference Include="Microsoft.AspNetCore.App" />
   </ItemGroup>
 
+  <ItemGroup>
+    <PackageReference Include="Datadog.Trace" Version="3.53.0" />
+    <PackageReference Include="Google.Cloud.PubSub.V1" Version="3.27.0" />
+  </ItemGroup>
+
 </Project>
