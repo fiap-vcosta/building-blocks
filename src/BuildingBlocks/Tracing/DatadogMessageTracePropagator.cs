@@ -10,8 +10,8 @@ public sealed class DatadogMessageTracePropagator : IMessageTracePropagator
     {
         ArgumentNullException.ThrowIfNull(attributes);
 
-        var context = Tracer.Instance.ActiveScope?.Span?.Context;
-        if (context is null)
+        var activeScope = Tracer.Instance.ActiveScope;
+        if (activeScope is null)
         {
             return;
         }
@@ -20,10 +20,10 @@ public sealed class DatadogMessageTracePropagator : IMessageTracePropagator
         injector.Inject(
             attributes,
             static (carrier, key, value) => carrier[key] = value,
-            context);
+            activeScope.Span.Context);
     }
 
-    public IDisposable? StartConsumerScope(
+    public IDisposable StartConsumerScope(
         string operationName,
         IEnumerable<KeyValuePair<string, string>> attributes)
     {

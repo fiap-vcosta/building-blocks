@@ -8,14 +8,32 @@ Biblioteca .NET 8 compartilhada pelos serviços da oficina. Pacote `building-blo
 2. Não criar host web nem API neste repositório
 3. **Git:** nunca commit/push direto em `main` — branch → PR → merge (ver [`.cursor/rules/git-workflow.mdc`](.cursor/rules/git-workflow.mdc))
 
-## Layout alvo
+## Layout
 
-Class library .NET 8, sem web host. Testes espelham `src/`. Id do pacote: `building-blocks`. Versões de pacote exatas quando o código existir. Sem comentários narrativos.
+| Peça | Papel |
+|------|--------|
+| `src/BuildingBlocks` | Class library: Events, Messaging, Tracing, Http (Problem Details, Auth, Middleware, Logging) |
+| `tests/UnitTests` | Testes unitários espelhando `src/` |
+| `.github/workflows/ci.yml` | InspectCode + unit/Coverlet 80 + SonarCloud |
+| `.github/workflows/publish.yml` | Pack/push GitHub Packages em push `main` |
+
+Dependências de pacote com versão exata. Sem comentários narrativos em C#.
 
 ## Fora de escopo
 
-Código de domínio de um serviço, host HTTP e Terraform de nuvem. Contratos de evento, worker Pub/Sub, propagação de trace, Problem Details, validação JWT/JWKS, `X-Service-Key` e logging JSON chegam depois; este repositório ainda não contém a biblioteca.
+Código de domínio de um serviço, host HTTP e Terraform de nuvem.
 
 ## Comandos
 
-Ainda não há projeto nem testes. Não inventar comandos `dotnet` até o código existir.
+```bash
+dotnet restore building-blocks.sln
+dotnet build building-blocks.sln -c Release
+dotnet test tests/UnitTests/UnitTests.csproj -c Release \
+  /p:CollectCoverage=true \
+  /p:CoverletOutputFormat=cobertura \
+  /p:CoverletOutput=../../test-results/coverage/coverage \
+  /p:Threshold=80 \
+  /p:ThresholdType=line%2Cbranch \
+  /p:ThresholdStat=minimum
+dotnet pack src/BuildingBlocks/BuildingBlocks.csproj -c Release -o artifacts
+```

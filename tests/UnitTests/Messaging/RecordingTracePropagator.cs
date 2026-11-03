@@ -15,11 +15,20 @@ internal sealed class RecordingTracePropagator : IMessageTracePropagator
         attributes["x-datadog-parent-id"] = "2";
     }
 
-    public IDisposable? StartConsumerScope(
+    public IDisposable StartConsumerScope(
         string operationName,
         IEnumerable<KeyValuePair<string, string>> attributes)
     {
         ConsumerScopeCalls++;
-        return null;
+        return EmptyScope.Instance;
+    }
+
+    private sealed class EmptyScope : IDisposable
+    {
+        public static EmptyScope Instance { get; } = new();
+
+        public void Dispose()
+        {
+        }
     }
 }
