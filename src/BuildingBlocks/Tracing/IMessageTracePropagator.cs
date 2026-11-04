@@ -4,7 +4,7 @@ public interface IMessageTracePropagator
 {
     void Inject(IDictionary<string, string> attributes);
 
-    IDisposable? StartConsumerScope(
+    IDisposable StartConsumerScope(
         string operationName,
         IEnumerable<KeyValuePair<string, string>> attributes);
 }

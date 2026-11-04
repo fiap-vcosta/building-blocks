@@ -1,0 +1,65 @@
+name: Publish
+
+on:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: read
+  packages: write
+
+concurrency:
+  group: publish-${{ github.repository }}
+  cancel-in-progress: false
+
+env:
+  DOTNET_NOLOGO: true
+  DOTNET_CLI_TELEMETRY_OPTOUT: true
+  PACKAGE_ID: building-blocks
+  PACKAGE_VERSION: 1.0.0
+  NUGET_FEED: https://nuget.pkg.github.com/fiap-vcosta/index.json
+
+jobs:
+  publish:
+    name: Pack and push
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v5
+        with:
+          global-json-file: global.json
+          source-url: ${{ env.NUGET_FEED }}
+        env:
+          NUGET_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Pack
+        run: |
+          mkdir -p artifacts
+          dotnet pack src/BuildingBlocks/BuildingBlocks.csproj \
+            -c Release \
+            -o artifacts \
+            --nologo
+
+      - name: Push to GitHub Packages
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          set +e
+          output=$(dotnet nuget push "artifacts/${PACKAGE_ID}.${PACKAGE_VERSION}.nupkg" \
+            --api-key "${GITHUB_TOKEN}" \
+            --source "${NUGET_FEED}" \
+            --skip-duplicate 2>&1)
+          status=$?
+          echo "$output"
+          if [ "$status" -eq 0 ]; then
+            exit 0
+          fi
+          if echo "$output" | grep -qiE 'already exists|Conflict|409|skip-duplicate|already been published'; then
+            echo "Package ${PACKAGE_ID} ${PACKAGE_VERSION} already exists; treating as success."
+            exit 0
+          fi
+          exit "$status"

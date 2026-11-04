@@ -1,5 +1,3 @@
-using BuildingBlocks.Events;
-
 namespace BuildingBlocks.Messaging;
 
 public interface IEventPublisher
