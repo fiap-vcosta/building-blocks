@@ -1,0 +1,6 @@
+<Project>
+  <PropertyGroup>
+    <!-- Underscores in test method names (Given_When_Then) are intentional. -->
+    <NoWarn>$(NoWarn);CA1707</NoWarn>
+  </PropertyGroup>
+</Project>

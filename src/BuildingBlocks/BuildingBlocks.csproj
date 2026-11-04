@@ -1,0 +1,22 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <RootNamespace>BuildingBlocks</RootNamespace>
+    <AssemblyName>building-blocks</AssemblyName>
+    <PackageId>building-blocks</PackageId>
+    <Version>1.0.0</Version>
+    <Authors>fiap-vcosta</Authors>
+    <Description>Biblioteca compartilhada pelos serviços da oficina (contratos, Pub/Sub, HTTP, JWT, logging).</Description>
+    <PackageTags>tech-challenge;building-blocks</PackageTags>
+    <IsPackable>true</IsPackable>
+    <GenerateDocumentationFile>false</GenerateDocumentationFile>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <FrameworkReference Include="Microsoft.AspNetCore.App" />
+  </ItemGroup>
+
+</Project>

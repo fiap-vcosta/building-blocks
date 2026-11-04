@@ -1,0 +1,40 @@
+# Build
+bin/
+obj/
+[Bb]uild/
+[Oo]ut/
+artifacts/
+
+# Test / coverage
+TestResults/
+test-results/
+coverage*.json
+coverage*.xml
+*.cobertura.xml
+
+# IDE
+.vs/
+.idea/
+*.user
+*.suo
+*.userosscache
+*.sln.docconfig
+
+# OS
+.DS_Store
+Thumbs.db
+
+# NuGet
+*.nupkg
+*.snupkg
+.nuget/
+project.lock.json
+project.fragment.lock.json
+packages/
+
+# Secrets / local
+*.pfx
+*.pem
+.env
+.env.*
+!*.example
