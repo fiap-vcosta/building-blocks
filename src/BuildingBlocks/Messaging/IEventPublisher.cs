@@ -7,4 +7,11 @@ public interface IEventPublisher
         string eventType,
         TData data,
         CancellationToken cancellationToken = default);
+
+    Task PublishAsync<TData>(
+        string topicId,
+        string eventType,
+        TData data,
+        int version,
+        CancellationToken cancellationToken = default);
 }

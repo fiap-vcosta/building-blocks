@@ -13,12 +13,18 @@ public class EventJsonTests
         {
             EventId = Guid.Parse("3f1c2a0e-7b4d-4e2a-9c11-0a6b8d2e4f10"),
             Type = EventTypes.DiagnosticoFinalizado,
-            Version = 1,
+            Version = 2,
             OccurredAt = DateTimeOffset.Parse("2026-10-25T15:04:05Z"),
             Data = new DiagnosticoFinalizadoData
             {
                 OrdemServicoId = 10,
                 VersaoDiagnostico = 1,
+                Cliente = new DiagnosticoFinalizadoCliente
+                {
+                    Nome = "Ada",
+                    Email = "ada@oficina.dev",
+                    Documento = "86421537090"
+                },
                 Servicos =
                 [
                     new DiagnosticoFinalizadoServico
@@ -39,13 +45,17 @@ public class EventJsonTests
         // Assert
         Assert.Equal(Guid.Parse("3f1c2a0e-7b4d-4e2a-9c11-0a6b8d2e4f10"), root.GetProperty("eventId").GetGuid());
         Assert.Equal(EventTypes.DiagnosticoFinalizado, root.GetProperty("type").GetString());
-        Assert.Equal(1, root.GetProperty("version").GetInt32());
+        Assert.Equal(2, root.GetProperty("version").GetInt32());
         Assert.Equal(
             "2026-10-25T15:04:05Z",
             root.GetProperty("occurredAt").GetDateTimeOffset().UtcDateTime.ToString("yyyy-MM-ddTHH:mm:ssZ"));
         var data = root.GetProperty("data");
         Assert.Equal(10, data.GetProperty("ordemServicoId").GetInt32());
         Assert.Equal(1, data.GetProperty("versaoDiagnostico").GetInt32());
+        var cliente = data.GetProperty("cliente");
+        Assert.Equal("Ada", cliente.GetProperty("nome").GetString());
+        Assert.Equal("ada@oficina.dev", cliente.GetProperty("email").GetString());
+        Assert.Equal("86421537090", cliente.GetProperty("documento").GetString());
         var servico = data.GetProperty("servicos")[0];
         Assert.Equal(3, servico.GetProperty("id").GetInt32());
         Assert.Equal("Troca de óleo", servico.GetProperty("nome").GetString());

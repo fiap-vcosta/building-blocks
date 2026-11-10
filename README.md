@@ -1,6 +1,6 @@
 # building-blocks
 
-Biblioteca .NET 8 compartilhada pelos serviços da oficina. Pacote NuGet `building-blocks` (versão `1.0.0`) publicado no GitHub Packages da org [fiap-vcosta](https://github.com/fiap-vcosta).
+Biblioteca .NET 8 compartilhada pelos serviços da oficina. Pacote NuGet `building-blocks` (versão `1.1.0`) publicado no GitHub Packages da org [fiap-vcosta](https://github.com/fiap-vcosta).
 
 ## Conteúdo
 
@@ -27,7 +27,7 @@ dotnet nuget add source https://nuget.pkg.github.com/fiap-vcosta/index.json \
 3. No projeto consumidor (com `nuget.config` mapeando `building-blocks` → `github`):
 
 ```bash
-dotnet add package building-blocks --version 1.0.0
+dotnet add package building-blocks --version 1.1.0
 dotnet restore
 ```
 
@@ -70,4 +70,4 @@ Gate: ≥ 80% line e branch.
 ## CI / publish
 
 - `CI`: InspectCode (warning = falha), unitários + Coverlet 80, SonarCloud (`fiap-vcosta_building-blocks`)
-- `Publish` (push em `main`): `dotnet pack` + push para GitHub Packages; se a versão `1.0.0` já existir, o job termina verde
+- `Publish` (push em `main`): `dotnet pack` + push para GitHub Packages; se a versão `1.1.0` já existir, o job termina verde
