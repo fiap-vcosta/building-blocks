@@ -17,7 +17,7 @@ env:
   DOTNET_NOLOGO: true
   DOTNET_CLI_TELEMETRY_OPTOUT: true
   PACKAGE_ID: building-blocks
-  PACKAGE_VERSION: 1.1.0
+  PACKAGE_VERSION: 1.1.1
   NUGET_FEED: https://nuget.pkg.github.com/fiap-vcosta/index.json
 
 jobs:

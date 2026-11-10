@@ -1,6 +1,7 @@
 using System.Collections.Concurrent;
 using System.Diagnostics.CodeAnalysis;
 using System.Runtime.CompilerServices;
+using Google.Api.Gax;
 using Google.Cloud.PubSub.V1;
 using Google.Protobuf;
 using Microsoft.Extensions.Options;
@@ -142,7 +143,10 @@ public sealed class GooglePubSubTransport(IOptions<PubSubOptions> options) : IPu
             return _publisherApi;
         }
 
-        _publisherApi = await PublisherServiceApiClient.CreateAsync(cancellationToken);
+        _publisherApi = await new PublisherServiceApiClientBuilder
+        {
+            EmulatorDetection = EmulatorDetection.EmulatorOrProduction
+        }.BuildAsync(cancellationToken);
         return _publisherApi;
     }
 
@@ -153,7 +157,10 @@ public sealed class GooglePubSubTransport(IOptions<PubSubOptions> options) : IPu
             return _subscriberApi;
         }
 
-        _subscriberApi = await SubscriberServiceApiClient.CreateAsync(cancellationToken);
+        _subscriberApi = await new SubscriberServiceApiClientBuilder
+        {
+            EmulatorDetection = EmulatorDetection.EmulatorOrProduction
+        }.BuildAsync(cancellationToken);
         return _subscriberApi;
     }
 }
