@@ -6,21 +6,24 @@ namespace BuildingBlocks.Tracing;
 [ExcludeFromCodeCoverage]
 public sealed class DatadogMessageTracePropagator : IMessageTracePropagator
 {
-    public void Inject(IDictionary<string, string> attributes)
+    public void Inject(IDictionary<string, string> attributes, string topicId)
     {
         ArgumentNullException.ThrowIfNull(attributes);
+        ArgumentException.ThrowIfNullOrWhiteSpace(topicId);
 
-        var activeScope = Tracer.Instance.ActiveScope;
-        if (activeScope is null)
-        {
-            return;
-        }
+        using var scope = Tracer.Instance.StartActive($"pubsub.publish {topicId}");
+        scope.Span.Type = SpanTypes.Queue;
+        scope.Span.ResourceName = topicId;
+        scope.Span.SetTag("span.kind", "producer");
+        scope.Span.SetTag("messaging.system", "gcp_pubsub");
+        scope.Span.SetTag("messaging.destination", topicId);
+        scope.Span.SetTag("messaging.operation", "publish");
 
         var injector = new SpanContextInjector();
         injector.Inject(
             attributes,
             static (carrier, key, value) => carrier[key] = value,
-            activeScope.Span.Context);
+            scope.Span.Context);
     }
 
     public IDisposable StartConsumerScope(
@@ -41,8 +44,13 @@ public sealed class DatadogMessageTracePropagator : IMessageTracePropagator
                     ? [value]
                     : Array.Empty<string>());
 
-        return Tracer.Instance.StartActive(
+        var scope = Tracer.Instance.StartActive(
             operationName,
             new SpanCreationSettings { Parent = parent });
+        scope.Span.Type = SpanTypes.Queue;
+        scope.Span.SetTag("span.kind", "consumer");
+        scope.Span.SetTag("messaging.system", "gcp_pubsub");
+        scope.Span.SetTag("messaging.operation", "receive");
+        return scope;
     }
 }

@@ -30,6 +30,7 @@ public class EventPublisherTests
         Assert.Equal(10, envelope.Data.OrdemServicoId);
         Assert.Equal(EventTypes.OrdemServicoFinalizada, published[0].Attributes["eventType"]);
         Assert.Equal(1, propagator.InjectCalls);
+        Assert.Equal(TopicIds.OrdemServicoFinalizada, propagator.LastInjectedTopicId);
         Assert.Equal("1", published[0].Attributes["x-datadog-trace-id"]);
     }
 

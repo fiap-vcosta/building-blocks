@@ -8,9 +8,12 @@ internal sealed class RecordingTracePropagator : IMessageTracePropagator
 
     public int ConsumerScopeCalls { get; private set; }
 
-    public void Inject(IDictionary<string, string> attributes)
+    public string? LastInjectedTopicId { get; private set; }
+
+    public void Inject(IDictionary<string, string> attributes, string topicId)
     {
         InjectCalls++;
+        LastInjectedTopicId = topicId;
         attributes["x-datadog-trace-id"] = "1";
         attributes["x-datadog-parent-id"] = "2";
     }
