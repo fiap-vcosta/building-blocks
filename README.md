@@ -1,11 +1,11 @@
 # building-blocks
 
-Biblioteca .NET 8 compartilhada pelos serviços da oficina. Pacote NuGet `building-blocks` (versão `1.1.1`) publicado no GitHub Packages da org [fiap-vcosta](https://github.com/fiap-vcosta).
+Biblioteca .NET 8 compartilhada pelos serviços da oficina. Pacote NuGet `building-blocks` (versão `1.2.0`) publicado no GitHub Packages da org [fiap-vcosta](https://github.com/fiap-vcosta).
 
 ## Conteúdo
 
 - Contratos de eventos de integração (envelope camelCase)
-- Pub/Sub (`IPubSubTransport`, publisher, worker) com propagação Datadog.Trace
+- Pub/Sub (`IPubSubTransport`, publisher, worker) com propagação Datadog.Trace (span producer `pubsub.publish` + consumer `queue`)
 - Problem Details (BCL + mapeamentos extras no host)
 - `X-Service-Key` (`ServiceAuth:Key`)
 - JWT RS256 (`Funcionario` / `Cliente`, JWKS ou PEM pública; claim `documento` no cliente)
@@ -27,13 +27,15 @@ dotnet nuget add source https://nuget.pkg.github.com/fiap-vcosta/index.json \
 3. No projeto consumidor (com `nuget.config` mapeando `building-blocks` → `github`):
 
 ```bash
-dotnet add package building-blocks --version 1.1.1
+dotnet add package building-blocks --version 1.2.0
 dotnet restore
 ```
 
 O `nuget.config` deste repositório já define o mapping: `building-blocks` só no feed `github`; demais pacotes em `nuget.org`.
 
 `GooglePubSubTransport` usa `EmulatorDetection.EmulatorOrProduction`: com `PUBSUB_EMULATOR_HOST` aponta para o emulador; sem a variável, usa a GCP.
+
+`DatadogMessageTracePropagator` abre um span `queue` no publish (filho do request HTTP quando houver `ActiveScope`) e no consume; o contexto vai nos atributos da mensagem Pub/Sub.
 
 ## Docker build com secret mount
 
@@ -72,4 +74,4 @@ Gate: ≥ 80% line e branch.
 ## CI / publish
 
 - `CI`: InspectCode (warning = falha), unitários + Coverlet 80, SonarCloud (`fiap-vcosta_building-blocks`)
-- `Publish` (push em `main`): `dotnet pack` + push para GitHub Packages; se a versão `1.1.1` já existir, o job termina verde
+- `Publish` (push em `main`): `dotnet pack` + push para GitHub Packages; se a versão `1.2.0` já existir, o job termina verde

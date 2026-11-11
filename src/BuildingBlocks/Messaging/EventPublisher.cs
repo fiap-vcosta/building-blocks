@@ -39,7 +39,7 @@ public sealed class EventPublisher(
         {
             ["eventType"] = eventType
         };
-        tracePropagator.Inject(attributes);
+        tracePropagator.Inject(attributes, topicId);
 
         await transport.PublishAsync(
             topicId,
