@@ -12,7 +12,7 @@ public class EventPublisherTests
         var transport = new InMemoryPubSubTransport();
         var propagator = new RecordingTracePropagator();
         var publisher = new EventPublisher(transport, propagator);
-        var data = new OrdemServicoFinalizadaData { OrdemServicoId = 10 };
+        var data = new OrdemServicoFinalizadaData { OrdemServicoId = Guid.Parse("aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaa1") };
 
         // Act
         await publisher.PublishAsync(
@@ -27,7 +27,7 @@ public class EventPublisherTests
         Assert.NotNull(envelope);
         Assert.Equal(EventTypes.OrdemServicoFinalizada, envelope.Type);
         Assert.Equal(1, envelope.Version);
-        Assert.Equal(10, envelope.Data.OrdemServicoId);
+        Assert.Equal(Guid.Parse("aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaa1"), envelope.Data.OrdemServicoId);
         Assert.Equal(EventTypes.OrdemServicoFinalizada, published[0].Attributes["eventType"]);
         Assert.Equal(1, propagator.InjectCalls);
         Assert.Equal(TopicIds.OrdemServicoFinalizada, propagator.LastInjectedTopicId);
@@ -42,7 +42,7 @@ public class EventPublisherTests
         var publisher = new EventPublisher(transport, new RecordingTracePropagator());
         var data = new DiagnosticoFinalizadoData
         {
-            OrdemServicoId = 10,
+            OrdemServicoId = Guid.Parse("aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaa1"),
             VersaoDiagnostico = 1,
             Cliente = new DiagnosticoFinalizadoCliente
             {
@@ -80,7 +80,7 @@ public class EventPublisherTests
             publisher.PublishAsync(
                 TopicIds.OrdemServicoFinalizada,
                 EventTypes.OrdemServicoFinalizada,
-                new OrdemServicoFinalizadaData { OrdemServicoId = 1 },
+                new OrdemServicoFinalizadaData { OrdemServicoId = Guid.Parse("aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaa4") },
                 version: 0));
     }
 
@@ -95,7 +95,7 @@ public class EventPublisherTests
             publisher.PublishAsync(
                 " ",
                 EventTypes.OrdemServicoFinalizada,
-                new OrdemServicoFinalizadaData { OrdemServicoId = 1 }));
+                new OrdemServicoFinalizadaData { OrdemServicoId = Guid.Parse("aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaa4") }));
     }
 
     [Fact]
@@ -109,7 +109,7 @@ public class EventPublisherTests
             publisher.PublishAsync(
                 TopicIds.OrdemServicoFinalizada,
                 " ",
-                new OrdemServicoFinalizadaData { OrdemServicoId = 1 }));
+                new OrdemServicoFinalizadaData { OrdemServicoId = Guid.Parse("aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaa4") }));
     }
 
     [Fact]

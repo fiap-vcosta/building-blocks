@@ -2,7 +2,7 @@ namespace BuildingBlocks.Events;
 
 public sealed class EstoqueReservadoData
 {
-    public required int OrdemServicoId { get; init; }
+    public required Guid OrdemServicoId { get; init; }
 
     public required DateTimeOffset AprovadaEm { get; init; }
 

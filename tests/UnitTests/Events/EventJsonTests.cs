@@ -17,7 +17,7 @@ public class EventJsonTests
             OccurredAt = DateTimeOffset.Parse("2026-10-25T15:04:05Z"),
             Data = new DiagnosticoFinalizadoData
             {
-                OrdemServicoId = 10,
+                OrdemServicoId = Guid.Parse("aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaa1"),
                 VersaoDiagnostico = 1,
                 Cliente = new DiagnosticoFinalizadoCliente
                 {
@@ -50,7 +50,7 @@ public class EventJsonTests
             "2026-10-25T15:04:05Z",
             root.GetProperty("occurredAt").GetDateTimeOffset().UtcDateTime.ToString("yyyy-MM-ddTHH:mm:ssZ"));
         var data = root.GetProperty("data");
-        Assert.Equal(10, data.GetProperty("ordemServicoId").GetInt32());
+        Assert.Equal(Guid.Parse("aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaa1"), data.GetProperty("ordemServicoId").GetGuid());
         Assert.Equal(1, data.GetProperty("versaoDiagnostico").GetInt32());
         var cliente = data.GetProperty("cliente");
         Assert.Equal("Ada", cliente.GetProperty("nome").GetString());
@@ -71,7 +71,7 @@ public class EventJsonTests
             EventTypes.OrcamentoGerado,
             new OrcamentoGeradoData
             {
-                OrdemServicoId = 10,
+                OrdemServicoId = Guid.Parse("aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaa1"),
                 VersaoDiagnostico = 1,
                 OrcamentoId = "orc-10-1"
             });
@@ -93,7 +93,7 @@ public class EventJsonTests
             EventTypes.OrcamentoFalhou,
             new OrcamentoFalhouData
             {
-                OrdemServicoId = 10,
+                OrdemServicoId = Guid.Parse("aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaa1"),
                 VersaoDiagnostico = 1,
                 Motivo = "falha ao gravar o orçamento"
             });
@@ -114,7 +114,7 @@ public class EventJsonTests
             EventTypes.OrdemServicoAprovada,
             new OrdemServicoAprovadaData
             {
-                OrdemServicoId = 10,
+                OrdemServicoId = Guid.Parse("aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaa1"),
                 AprovadaEm = DateTimeOffset.Parse("2026-10-25T15:10:00Z"),
                 Itens = [new OrdemServicoAprovadaItem { ItemEstoqueId = 7, Quantidade = 2 }]
             });
@@ -139,7 +139,7 @@ public class EventJsonTests
             EventTypes.EstoqueReservado,
             new EstoqueReservadoData
             {
-                OrdemServicoId = 10,
+                OrdemServicoId = Guid.Parse("aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaa1"),
                 AprovadaEm = DateTimeOffset.Parse("2026-10-25T15:10:00Z"),
                 Itens =
                 [
@@ -169,7 +169,7 @@ public class EventJsonTests
             EventTypes.EstoqueEmFalta,
             new EstoqueEmFaltaData
             {
-                OrdemServicoId = 10,
+                OrdemServicoId = Guid.Parse("aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaa1"),
                 AprovadaEm = DateTimeOffset.Parse("2026-10-25T15:10:00Z"),
                 Itens =
                 [
@@ -197,14 +197,14 @@ public class EventJsonTests
         // Arrange
         var envelope = CreateEnvelope(
             EventTypes.OrdemServicoFinalizada,
-            new OrdemServicoFinalizadaData { OrdemServicoId = 10 });
+            new OrdemServicoFinalizadaData { OrdemServicoId = Guid.Parse("aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaa1") });
 
         // Act
         var result = EventJson.Deserialize<OrdemServicoFinalizadaData>(EventJson.Serialize(envelope));
 
         // Assert
         Assert.NotNull(result);
-        Assert.Equal(10, result.Data.OrdemServicoId);
+        Assert.Equal(Guid.Parse("aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaa1"), result.Data.OrdemServicoId);
     }
 
     [Fact]
@@ -213,7 +213,7 @@ public class EventJsonTests
         // Arrange
         var envelope = CreateEnvelope(
             EventTypes.CobrancaGerada,
-            new CobrancaGeradaData { OrdemServicoId = 10, CobrancaId = "ord_mp_1" });
+            new CobrancaGeradaData { OrdemServicoId = Guid.Parse("aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaa1"), CobrancaId = "ord_mp_1" });
 
         // Act
         var result = EventJson.Deserialize<CobrancaGeradaData>(EventJson.Serialize(envelope));
@@ -229,14 +229,14 @@ public class EventJsonTests
         // Arrange
         var envelope = CreateEnvelope(
             EventTypes.PagamentoConfirmado,
-            new PagamentoConfirmadoData { OrdemServicoId = 10, CobrancaId = "ord_mp_1" });
+            new PagamentoConfirmadoData { OrdemServicoId = Guid.Parse("aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaa1"), CobrancaId = "ord_mp_1" });
 
         // Act
         var result = EventJson.Deserialize<PagamentoConfirmadoData>(EventJson.Serialize(envelope));
 
         // Assert
         Assert.NotNull(result);
-        Assert.Equal(10, result.Data.OrdemServicoId);
+        Assert.Equal(Guid.Parse("aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaa1"), result.Data.OrdemServicoId);
         Assert.Equal("ord_mp_1", result.Data.CobrancaId);
     }
 
@@ -248,7 +248,7 @@ public class EventJsonTests
             EventTypes.PagamentoRecusado,
             new PagamentoRecusadoData
             {
-                OrdemServicoId = 10,
+                OrdemServicoId = Guid.Parse("aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaa1"),
                 CobrancaId = "ord_mp_1",
                 Motivo = PagamentoRecusadoMotivos.Recusado
             });
@@ -268,14 +268,14 @@ public class EventJsonTests
         // Arrange
         var envelope = CreateEnvelope(
             EventTypes.OrdemServicoDescartada,
-            new OrdemServicoDescartadaData { OrdemServicoId = 10 });
+            new OrdemServicoDescartadaData { OrdemServicoId = Guid.Parse("aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaa1") });
 
         // Act
         var result = EventJson.Deserialize<OrdemServicoDescartadaData>(EventJson.Serialize(envelope));
 
         // Assert
         Assert.NotNull(result);
-        Assert.Equal(10, result.Data.OrdemServicoId);
+        Assert.Equal(Guid.Parse("aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaa1"), result.Data.OrdemServicoId);
     }
 
     [Fact]
@@ -286,7 +286,7 @@ public class EventJsonTests
             EventTypes.OrcamentoDisponivel,
             new OrcamentoDisponivelData
             {
-                OrdemServicoId = 10,
+                OrdemServicoId = Guid.Parse("aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaa1"),
                 VersaoDiagnostico = 1,
                 OrcamentoId = "orc-10-1",
                 ValorTotal = 150.0m,
@@ -314,7 +314,7 @@ public class EventJsonTests
             EventTypes.CobrancaPixDisponivel,
             new CobrancaPixDisponivelData
             {
-                OrdemServicoId = 10,
+                OrdemServicoId = Guid.Parse("aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaa1"),
                 CobrancaId = "ord_mp_1",
                 ValorTotal = 150.0m,
                 QrCode = "00020126...",
