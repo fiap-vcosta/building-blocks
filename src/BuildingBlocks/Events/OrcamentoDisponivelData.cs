@@ -2,7 +2,7 @@ namespace BuildingBlocks.Events;
 
 public sealed class OrcamentoDisponivelData
 {
-    public required int OrdemServicoId { get; init; }
+    public required Guid OrdemServicoId { get; init; }
 
     public required int VersaoDiagnostico { get; init; }
 

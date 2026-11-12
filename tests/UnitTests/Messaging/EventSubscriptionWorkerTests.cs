@@ -33,7 +33,7 @@ public class EventSubscriptionWorkerTests
         await publisher.PublishAsync(
             TopicIds.OrdemServicoFinalizada,
             EventTypes.OrdemServicoFinalizada,
-            new OrdemServicoFinalizadaData { OrdemServicoId = 42 });
+            new OrdemServicoFinalizadaData { OrdemServicoId = Guid.Parse("aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaa2") });
 
         await WaitForAsync(() => handler.Calls.Count > 0, TimeSpan.FromSeconds(2));
         await cts.CancelAsync();
@@ -41,7 +41,7 @@ public class EventSubscriptionWorkerTests
 
         // Assert
         Assert.Single(handler.Calls);
-        Assert.Equal(42, handler.Calls[0].Data.OrdemServicoId);
+        Assert.Equal(Guid.Parse("aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaa2"), handler.Calls[0].Data.OrdemServicoId);
         Assert.True(propagator.ConsumerScopeCalls >= 1);
     }
 
@@ -67,7 +67,7 @@ public class EventSubscriptionWorkerTests
         await new EventPublisher(transport, new RecordingTracePropagator()).PublishAsync(
             TopicIds.OrdemServicoFinalizada,
             EventTypes.OrdemServicoFinalizada,
-            new OrdemServicoFinalizadaData { OrdemServicoId = 7 });
+            new OrdemServicoFinalizadaData { OrdemServicoId = Guid.Parse("aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaa3") });
 
         await WaitForAsync(() => handler.Calls.Count > 0, TimeSpan.FromSeconds(2));
         transport.Complete(subscriptionId);
@@ -172,7 +172,7 @@ public class EventSubscriptionWorkerTests
             OccurredAt = DateTimeOffset.UtcNow,
             Data = new OrcamentoGeradoData
             {
-                OrdemServicoId = 1,
+                OrdemServicoId = Guid.Parse("aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaa4"),
                 VersaoDiagnostico = 1,
                 OrcamentoId = "orc-1"
             }
