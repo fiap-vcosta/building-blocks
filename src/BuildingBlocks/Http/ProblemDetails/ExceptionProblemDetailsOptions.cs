@@ -2,8 +2,7 @@ namespace BuildingBlocks.Http.ProblemDetails;
 
 public sealed class ExceptionProblemDetailsOptions
 {
-    private readonly Dictionary<Type, Func<Exception, (int StatusCode, string Title, string Detail)>> _mappings =
-        new();
+    private readonly Dictionary<Type, Func<Exception, (int StatusCode, string Title, string Detail)>> _mappings = [];
 
     public IReadOnlyDictionary<Type, Func<Exception, (int StatusCode, string Title, string Detail)>> Mappings =>
         _mappings;

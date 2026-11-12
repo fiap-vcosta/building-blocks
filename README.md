@@ -1,5 +1,11 @@
 # building-blocks
 
+[![Quality Gate](https://sonarcloud.io/api/project_badges/quality_gate?project=fiap-vcosta_building-blocks)](https://sonarcloud.io/summary/new_code?id=fiap-vcosta_building-blocks)
+[![Reliability](https://sonarcloud.io/api/project_badges/measure?project=fiap-vcosta_building-blocks&metric=reliability_rating)](https://sonarcloud.io/summary/new_code?id=fiap-vcosta_building-blocks)
+[![Security](https://sonarcloud.io/api/project_badges/measure?project=fiap-vcosta_building-blocks&metric=security_rating)](https://sonarcloud.io/summary/new_code?id=fiap-vcosta_building-blocks)
+[![Maintainability](https://sonarcloud.io/api/project_badges/measure?project=fiap-vcosta_building-blocks&metric=sqale_rating)](https://sonarcloud.io/summary/new_code?id=fiap-vcosta_building-blocks)
+[![Duplications](https://sonarcloud.io/api/project_badges/measure?project=fiap-vcosta_building-blocks&metric=duplicated_lines_density)](https://sonarcloud.io/summary/new_code?id=fiap-vcosta_building-blocks)
+
 Biblioteca .NET 8 compartilhada pelos serviços da oficina. Pacote NuGet `building-blocks` (versão `1.2.0`) publicado no GitHub Packages da org [fiap-vcosta](https://github.com/fiap-vcosta).
 
 ## Conteúdo
