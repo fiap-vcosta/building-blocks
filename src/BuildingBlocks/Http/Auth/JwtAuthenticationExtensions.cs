@@ -52,21 +52,18 @@ public static class JwtAuthenticationExtensions
             .AddJwtBearer(AuthSchemes.Funcionario, bearer => ConfigureBearer(bearer, options.Funcionario))
             .AddJwtBearer(AuthSchemes.Cliente, bearer => ConfigureBearer(bearer, options.Cliente));
 
-        services.AddAuthorization(auth =>
-        {
-            auth.AddPolicy(AuthPolicies.FuncionarioJwt, policy =>
+        services.AddAuthorizationBuilder()
+            .AddPolicy(AuthPolicies.FuncionarioJwt, policy =>
             {
                 policy.AddAuthenticationSchemes(AuthSchemes.Funcionario);
                 policy.RequireAuthenticatedUser();
-            });
-
-            auth.AddPolicy(AuthPolicies.ClienteJwt, policy =>
+            })
+            .AddPolicy(AuthPolicies.ClienteJwt, policy =>
             {
                 policy.AddAuthenticationSchemes(AuthSchemes.Cliente);
                 policy.RequireAuthenticatedUser();
                 policy.RequireClaim(ClienteJwtClaims.Documento);
             });
-        });
 
         return services;
     }

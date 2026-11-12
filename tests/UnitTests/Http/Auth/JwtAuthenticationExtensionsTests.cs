@@ -166,7 +166,7 @@ public class JwtAuthenticationExtensionsTests
 
     private static class JwtKeyMaterialAccessor
     {
-        public static SecurityKey Create(string pem)
+        public static RsaSecurityKey Create(string pem)
         {
             using var rsa = RSA.Create();
             rsa.ImportFromPem(pem);
