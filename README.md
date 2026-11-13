@@ -1,12 +1,23 @@
 # building-blocks
 
 [![Quality Gate](https://sonarcloud.io/api/project_badges/quality_gate?project=fiap-vcosta_building-blocks)](https://sonarcloud.io/summary/new_code?id=fiap-vcosta_building-blocks)
+[![Coverage](https://sonarcloud.io/api/project_badges/measure?project=fiap-vcosta_building-blocks&metric=coverage)](https://sonarcloud.io/summary/new_code?id=fiap-vcosta_building-blocks)
 [![Reliability](https://sonarcloud.io/api/project_badges/measure?project=fiap-vcosta_building-blocks&metric=reliability_rating)](https://sonarcloud.io/summary/new_code?id=fiap-vcosta_building-blocks)
 [![Security](https://sonarcloud.io/api/project_badges/measure?project=fiap-vcosta_building-blocks&metric=security_rating)](https://sonarcloud.io/summary/new_code?id=fiap-vcosta_building-blocks)
 [![Maintainability](https://sonarcloud.io/api/project_badges/measure?project=fiap-vcosta_building-blocks&metric=sqale_rating)](https://sonarcloud.io/summary/new_code?id=fiap-vcosta_building-blocks)
 [![Duplications](https://sonarcloud.io/api/project_badges/measure?project=fiap-vcosta_building-blocks&metric=duplicated_lines_density)](https://sonarcloud.io/summary/new_code?id=fiap-vcosta_building-blocks)
 
 Biblioteca .NET 8 compartilhada pelos serviços da oficina. Pacote NuGet `building-blocks` (versão `1.3.0`) publicado no GitHub Packages da org [fiap-vcosta](https://github.com/fiap-vcosta).
+
+## Documentação
+
+Este repositório não é dono de ADRs. Decisões relacionadas aos blocos desta biblioteca:
+
+- RS256/JWKS: [`autenticacao-service` ADR 001](https://github.com/fiap-vcosta/autenticacao-service/blob/main/docs/adrs/001-rs256-jwks.md)
+- Pub/Sub pull: [`infra-events` ADR 001](https://github.com/fiap-vcosta/infra-events/blob/main/docs/adrs/001-pubsub-pull.md)
+- Divisão em microsserviços: [`e2e` ADR 003](https://github.com/fiap-vcosta/e2e/blob/main/docs/adrs/003-divisao-microsservicos.md)
+- Saga coreografada: [`e2e` ADR 004](https://github.com/fiap-vcosta/e2e/blob/main/docs/adrs/004-saga-coreografada.md)
+- Publicação sem outbox: [`e2e` ADR 005](https://github.com/fiap-vcosta/e2e/blob/main/docs/adrs/005-publicacao-sem-outbox.md)
 
 ## Conteúdo
 
